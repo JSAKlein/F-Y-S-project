@@ -1,5 +1,5 @@
 
-import java.io.IOException;
+
 import java.sql.*;
 
 /**
@@ -14,7 +14,7 @@ public class MySQL {
         try {
             
             String pid = json.findPid(ticketNumber);
-            //laden van driver
+            //laden van drivers
             Class.forName("com.mysql.jdbc.Driver");
             
             //maakt een connectie met de database
@@ -37,7 +37,8 @@ public class MySQL {
                 return true;
             }
             
-        } catch (IOException | ClassNotFoundException | SQLException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
        return false;
     
