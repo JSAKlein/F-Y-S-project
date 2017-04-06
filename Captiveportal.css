@@ -40,20 +40,9 @@
     font-size: 14px;
     cursor: pointer;
 }
-
-/* corendon logo */
-h1 {
-
-    text-decoration:none;
-    border:0;
-    position:absolute;
-    width : 60%;
-    height : 55%;
-    margin :   -110% 7% ;
-    padding : 0;
-    background : url(images/logo.jpg) no-repeat 0 0;
-    background-size: 200px 150px;
-
+/* submit knop kleur verandering */
+.form button:hover,.form button:active,.form button:focus {
+    background: #CC0000;
 }
 /* corendon logo redirect (text block) */
 h1 a {
