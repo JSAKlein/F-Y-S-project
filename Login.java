@@ -13,8 +13,11 @@ import javax.servlet.http.*;
   
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+        
+        //set content type
         response.setContentType("text/html;charset=UTF-8");
         
+        //get ticket information from page
         PrintWriter out = response.getWriter();
         String ticketNumber = request.getParameter("ticketNumber");
         String lastName = request.getParameter("lastName");
@@ -23,7 +26,7 @@ import javax.servlet.http.*;
     
         //final user check.    
         if (MySQL.checkUser(ticketNumber, lastName) && json.checkLastname(lastName, pid) && json.checkTicket(ticketNumber)) {
-            RequestDispatcher rs = request.getRequestDispatcher("Welcome.java");
+            RequestDispatcher rs = request.getRequestDispatcher("Welcome");
             rs.forward(request, response);
 
         } else {
