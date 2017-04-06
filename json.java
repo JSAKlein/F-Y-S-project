@@ -1,80 +1,77 @@
+/*
+ * @author Jeremia Klein
+ */
 
 import java.io.*;
 import java.net.*;
 
-
-/**
- *
- * @author Jeremia Klein
- *
- */
 public class json {
 
     protected static boolean checkTicket(String ticketNumber) throws IOException {
-        try {
-            final URL url = new URL("http://fys.securidoc.nl/Ticket");
-            final String request = "{\n" + "\"function\":\"List\",  \n"
-                    +"\"teamId\": \"IN104-5\", \n" + " \"teamKey\": \"26b2fd690864f66eb5e7d38d71f9f9d5\","
-                    + "\"resquestId\" : \"42\"  \n" + "}";
+try{
+        final URL url = new URL("http://XXXXXXX.XXX");
+        final String query = "{\n" + "\"function\":\"List\",	\n" + "	\"teamId\": \"XXXXX\", \n" + "	\"teamKey\": \"XXXXXXXXXXXXXXX\"," + "\"requestId\" : \"1\"	\n" + "}";
 
-            //maakt een connectie
-            URLConnection urlc = url.openConnection();
+        //make connection
+        URLConnection urlc = url.openConnection();
 
-            //voer post uit
-            urlc.setDoOutput(true);
-            urlc.setAllowUserInteraction(false);
+        //use post mode
+        urlc.setDoOutput(true);
+        urlc.setAllowUserInteraction(false);
 
-            //Verstuurd de query
-            PrintStream ps = new PrintStream(urlc.getOutputStream());
-            ps.print(request);
-            ps.close();
+        //send query
+        PrintStream ps = new PrintStream(urlc.getOutputStream());
+        ps.print(query);
+        ps.close();
 
-            //krijg resultaat
-            BufferedReader br = new BufferedReader(new InputStreamReader(urlc
-                    .getInputStream()));
+        //get result
+        BufferedReader br = new BufferedReader(new InputStreamReader(urlc
+                .getInputStream()));
+        
+        String list = null;
+        String[] parts = null;
+        String Check = ("\"ticketNumber\":\"" + ticketNumber + "\"");
 
-            String list = null;
-            String[] parts = null;
-            String Check = ("\"ticketNumber\":\"" + ticketNumber + "\"");
-
-            //splitsen van string in de array 
-            while ((list = br.readLine()) != null) {
-                parts = list.split(",");
-            }
-
-            for (int i = 0; i < parts.length; i++) {
-                if (Check.equals(parts[i])) {
-
-                    return true;
-                }
-            }
-        } catch (IOException e) {
+        //splitting String in Array.
+        while ((list = br.readLine()) != null) {
+            parts = list.split(",");
         }
 
+        //Real check if ticketnumber is in list.
+        for (int i = 0; i < parts.length; i++) {
+
+            if (Check.equals(parts[i])) {
+                return true;
+            }
+
+        }
+        
+        }catch(IOException e)
+      {
+      }
         return false;
     }
-
+   
+    
     protected static String findPid(String ticketnumber) throws IOException {
-
         try {
-            final URL url = new URL("http://fys.securidoc.nl/Ticket");
-            final String request = "{\n" + "\"function\":\"List\",  \n"
-                    + "\"teamId\": \"IN104-5\", \n" + " \"teamKey\": \"26b2fd690864f66eb5e7d38d71f9f9d5\","
-                    + "\"resquestId\" : \"42\"  \n" + "}";
 
-            //maakt een connectie
+            final URL url = new URL("http://fys.securidoc.nl/Ticket");
+            final String query = "{\n" + "\"function\":\"List\",	\n" + "	\"teamId\": \”XXXXXXX\”, \n" + "	\"teamKey\": \”XXXXXXXXXXXXX\”,” + "\"requestId\" : \"1\"	\n" + "}";
+
+            //make connection
             URLConnection urlc = url.openConnection();
 
-            //voer post uit
+            //use post mode
             urlc.setDoOutput(true);
             urlc.setAllowUserInteraction(false);
 
-            //Verstuurd de query
+            //send query
             PrintStream ps = new PrintStream(urlc.getOutputStream());
-            ps.print(request);
+            ps.print(query);
             ps.close();
 
-            //krijg resultaat
+            //get result
             BufferedReader br = new BufferedReader(new InputStreamReader(urlc
                     .getInputStream()));
 
@@ -83,72 +80,79 @@ public class json {
             String Check = ("\"ticketNumber\":\"" + ticketnumber + "\"");
             String Pid[]=null;
 
-            //splitsen van string in de array 
+            //splitting String in Array.
             while ((list = br.readLine()) != null) {
                 parts = list.split(",");
             }
 
-            //Test of het ticketnummer al in de lijst staat
+            //Real check if ticketnumber is in list and return pid.
             for (int i = 0; i < parts.length; i++) {
+
                 if (Check.equals(parts[i])) {
                     ticketnumber = parts[i + 1];
                     Pid = ticketnumber.split("\"pid\":");
-                    ticketnumber = Pid[1];                    
+                    ticketnumber = Pid[1];
                     return ticketnumber;
+
                 }
+
             }
+
         } catch (IOException e) {
         }
-        String error = "Er is iets misgegaan.";
+        String error = "Something went wrong.";
         return error;
-    }
 
-    protected static boolean checkLastname(String lastName, String pid) throws IOException {
+    }
+    
+     protected static boolean checkLastname(String Lastname, String pid) throws IOException {
         try {
             final URL url = new URL("http://fys.securidoc.nl/Passenger");
-            final String request = "{\n" + "\"function\":\"List\",  \n"
-                    + "\"teamId\": \"IN104-5\", \n" + " \"teamKey\": \"26b2fd690864f66eb5e7d38d71f9f9d5\","
-                    + "\"resquestId\" : \"42\"  \n" + "}";
+            final String query = "{\n" + "\"function\":\"List\",	\n" + "	\"teamId\": \”XXXXXX\”, \n" + "	\"teamKey\": \”XXXXXXXXXXXXXX\”,” + "\"requestId\" : \"1\"	\n" + "}";
 
-            //maakt een connectie
+            //make connection
             URLConnection urlc = url.openConnection();
 
-            //voer post uit
+            //use post mode
             urlc.setDoOutput(true);
             urlc.setAllowUserInteraction(false);
 
-            //Verstuurd de query
+            //send query
             PrintStream ps = new PrintStream(urlc.getOutputStream());
-            ps.print(request);
+            ps.print(query);
             ps.close();
 
-            //krijg resultaat
-            BufferedReader br = new BufferedReader(new InputStreamReader(urlc.getInputStream()));
+            //get result
+            BufferedReader br = new BufferedReader(new InputStreamReader(urlc
+                    .getInputStream()));
 
             String list = null;
             String[] parts = null;
-            String CheckLastName = ("\"lastName\":\"" + lastName + "\"");
-            String CheckPid = (pid+":[\"pid\":"+pid);
+            String CheckL = ("\"lastName\":\"" + Lastname + "\"");
+            String CheckP = (pid+":{\"pid\":"+pid);
+        
 
-            //splitsen van string in de array 
+            //splitting String in Array.
             while ((list = br.readLine()) != null) {
                 parts = list.split(",");
             }
-            
+
+            //Real check if lastname is in list.
             for (int i = 0; i < parts.length; i++) {
-                
-                if (CheckPid.equals(parts[i])) {
-                    
-                    if (CheckLastName.equalsIgnoreCase(parts[i+2])) {
-                        return true;
-                    }
+
+                if (CheckP.equals(parts[i])) {
+                  
+                    if(CheckL.equalsIgnoreCase(parts[i+2])){
+                       return true; 
+                   }
+                   
                 }
+
             }
-        }
-        catch (IOException e) {
-        }
 
+        } catch (IOException e) {
+        }
         return false;
-    }
-
+     }   
+    
 }
