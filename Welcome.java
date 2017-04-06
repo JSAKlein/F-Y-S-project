@@ -11,7 +11,7 @@ public class Welcome extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        String contextPath = "http://192.168.42.1:8080/FYSProject";
+        String contextPath = "http://192.168.42.1:8080/process.php";
         response.sendRedirect(response.encodeRedirectURL(contextPath));
 
     }
